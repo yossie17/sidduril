@@ -46,6 +46,10 @@ struct ContentView: View {
                     }
 
                     Spacer()
+                    
+                    // Sun times view at the bottom
+                    SunTimesView()
+                        .padding(.bottom)
                 }
                 .padding()
             }
