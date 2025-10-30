@@ -47,9 +47,12 @@ struct ContentView: View {
 
                     Spacer()
                     
-                    // Sun times view at the bottom
-                    SunTimesView()
-                        .padding(.bottom)
+                    // Widget area at the bottom
+                    HStack(spacing: 16) {
+                        SunTimesView()
+                        HebrewDateView()
+                    }
+                    .padding(.bottom)
                 }
                 .padding()
             }
