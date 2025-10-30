@@ -2,6 +2,17 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var prayers: [Prayer] = []
+    
+    init() {
+        // Force RTL for navigation bar items
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(red: 0.98, green: 0.96, blue: 0.90, alpha: 1.0)
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().semanticContentAttribute = .forceRightToLeft
+    }
 
     var body: some View {
         NavigationView {
