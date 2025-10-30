@@ -66,23 +66,77 @@ struct PrayerTextView: UIViewRepresentable {
             paragraph.lineSpacing = 6
             paragraph.paragraphSpacing = 8
 
-            let font: UIFont
+            let regularFont: UIFont
+            let boldFont: UIFont
+            
             if let f = UIFont(name: parent.fontName, size: parent.fontSize) {
-                font = f
+                regularFont = f
+                // Try to get bold variant, fallback to system bold
+                if let bf = UIFont(name: "FrankRuhlLibre-Bold", size: parent.fontSize) {
+                    boldFont = bf
+                } else {
+                    boldFont = UIFont.boldSystemFont(ofSize: parent.fontSize)
+                }
             } else {
-                font = UIFont.systemFont(ofSize: parent.fontSize)
+                regularFont = UIFont.systemFont(ofSize: parent.fontSize)
+                boldFont = UIFont.boldSystemFont(ofSize: parent.fontSize)
             }
 
-            let attrs: [NSAttributedString.Key: Any] = [
-                .font: font,
+            let regularAttrs: [NSAttributedString.Key: Any] = [
+                .font: regularFont,
+                .paragraphStyle: paragraph,
+                .foregroundColor: UIColor.label
+            ]
+            
+            let boldAttrs: [NSAttributedString.Key: Any] = [
+                .font: boldFont,
                 .paragraphStyle: paragraph,
                 .foregroundColor: UIColor.label
             ]
 
-            let attrString = NSAttributedString(string: text, attributes: attrs)
+            // Create attributed string with bold titles
+            let attrString = NSMutableAttributedString()
+            let lines = text.components(separatedBy: .newlines)
+            
+            for (index, line) in lines.enumerated() {
+                let isTitle = isLineATitle(line)
+                let attrs = isTitle ? boldAttrs : regularAttrs
+                
+                attrString.append(NSAttributedString(string: line, attributes: attrs))
+                
+                // Add newline except for last line
+                if index < lines.count - 1 {
+                    attrString.append(NSAttributedString(string: "\n", attributes: regularAttrs))
+                }
+            }
+            
             lastText = text
             lastAttributed = attrString
             textView.attributedText = attrString
+        }
+        
+        private func isLineATitle(_ line: String) -> Bool {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            
+            // Empty lines are not titles
+            if trimmed.isEmpty {
+                return false
+            }
+            
+            // Lines with vowel marks (nikkud) are not titles
+            let nikudRange: ClosedRange<Unicode.Scalar> = "\u{0591}"..."\u{05C7}"
+            let nikudCharacterSet = CharacterSet(charactersIn: nikudRange)
+            if trimmed.rangeOfCharacter(from: nikudCharacterSet) != nil {
+                return false
+            }
+            
+            // Short lines without nikkud are likely titles
+            // Typical title length is less than 30 characters
+            if trimmed.count < 30 {
+                return true
+            }
+            
+            return false
         }
     }
 
