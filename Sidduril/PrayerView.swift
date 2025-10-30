@@ -10,13 +10,14 @@ struct PrayerView: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .multilineTextAlignment(.trailing)
                 .padding(.bottom, 6)
+                .environment(\.layoutDirection, .rightToLeft)
 
             // Let the UITextView handle scrolling internally for best performance
             PrayerTextView(text: prayer.text, fontSize: 20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .padding()
-        .environment(\.layoutDirection, .rightToLeft)
+
         .background(Color(red: 0.98, green: 0.96, blue: 0.90))
         .navigationTitle(prayer.name)
         .navigationBarTitleDisplayMode(.inline)

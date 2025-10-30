@@ -25,6 +25,7 @@ struct ContentView: View {
                         .font(.custom("FrankRuhlLibre-Regular", size: 32))
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.top, 30)
+                        .environment(\.layoutDirection, .rightToLeft)
 
                     ScrollView {
                         LazyVStack(alignment: .trailing, spacing: 12) {
@@ -51,7 +52,7 @@ struct ContentView: View {
             .navigationTitle("")
             .toolbar(.hidden, for: .navigationBar)
         }
-        .environment(\.layoutDirection, .rightToLeft)
+
         .task {
             // Load prayers off the main thread to avoid blocking UI
             prayers = await PrayerLoader.loadAllPrayersAsync()

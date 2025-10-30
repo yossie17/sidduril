@@ -4,10 +4,6 @@ import UIKit
 @main
 struct SiddurlyApp: App {
     init() {
-        // Basic RTL setup for navigation and views
-        UIView.appearance().semanticContentAttribute = .forceRightToLeft
-        UINavigationBar.appearance().semanticContentAttribute = .forceRightToLeft
-        
         // Set navigation bar appearance
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
@@ -20,7 +16,6 @@ struct SiddurlyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.layoutDirection, .rightToLeft)
         }
     }
 }
