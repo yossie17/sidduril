@@ -12,14 +12,21 @@ class PrayerLoader {
             return []
         }
         
-        return urls.compactMap { url in
-            let name = url.deletingPathExtension().lastPathComponent
+        // Load all prayers into a dictionary
+        var prayerDict: [String: Prayer] = [:]
+        for url in urls {
+            let filename = url.deletingPathExtension().lastPathComponent
             if let contents = try? String(contentsOf: url, encoding: .utf8) {
-                return Prayer(name: displayName(from: name), text: contents)
-            } else {
-                return nil
+                let prayer = Prayer(name: displayName(from: filename), text: contents)
+                prayerDict[filename] = prayer
             }
-        }.sorted(by: { $0.name < $1.name })
+        }
+        
+        // Define the specific order
+        let order = ["shacharit", "mincha", "arvit", "birkathamazon"]
+        
+        // Return prayers in the specified order
+        return order.compactMap { prayerDict[$0] }
     }
 
     /// Async wrapper that loads prayers off the main thread to avoid blocking UI.
