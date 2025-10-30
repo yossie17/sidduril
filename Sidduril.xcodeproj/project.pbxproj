@@ -10,9 +10,22 @@
 		8BE492892EAE72EE00027DE4 /* Sidduril.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidduril.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8BCDE45C2EB38E4D0083FF8E /* Exceptions for "Sidduril" folder in "Sidduril" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8BE492882EAE72EE00027DE4 /* Sidduril */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8BE4928B2EAE72EE00027DE4 /* Sidduril */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8BCDE45C2EB38E4D0083FF8E /* Exceptions for "Sidduril" folder in "Sidduril" target */,
+			);
 			path = Sidduril;
 			sourceTree = "<group>";
 		};
@@ -253,6 +266,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sidduril/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to calculate accurate prayer times based on sunrise and sunse";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -286,6 +300,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sidduril/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to calculate accurate prayer times based on sunrise and sunse";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

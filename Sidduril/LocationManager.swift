@@ -62,18 +62,34 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     private func fetchSunriseSunset(latitude: Double, longitude: Double) async {
         let urlString = "https://api.sunrise-sunset.org/json?lat=\(latitude)&lng=\(longitude)&formatted=0"
-        guard let url = URL(string: urlString) else { return }
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
         
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let response = try JSONDecoder().decode(SunriseSunsetResponse.self, from: data)
+            let (data, response) = try await URLSession.shared.data(from: url)
             
-            if response.status == "OK" {
-                sunrise = response.results.sunrise
-                sunset = response.results.sunset
+            if let httpResponse = response as? HTTPURLResponse {
+                print("HTTP Status: \(httpResponse.statusCode)")
+            }
+            
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            
+            let apiResponse = try decoder.decode(SunriseSunsetResponse.self, from: data)
+            
+            print("API Status: \(apiResponse.status)")
+            
+            if apiResponse.status == "OK" {
+                sunrise = apiResponse.results.sunrise
+                sunset = apiResponse.results.sunset
+                print("Sunrise: \(apiResponse.results.sunrise)")
+                print("Sunset: \(apiResponse.results.sunset)")
             }
         } catch {
-            // Silently fail and keep previous values
+            print("Error fetching sunrise/sunset: \(error)")
+            print("Error details: \(error.localizedDescription)")
         }
     }
 }
