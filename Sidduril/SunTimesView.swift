@@ -16,8 +16,8 @@ struct SunTimesView: View {
                     .foregroundColor(.red)
             } else {
                 HStack(spacing: 16) {
-                    timeView(time: locationManager.sunrise, label: "זריחה", symbol: "sunrise.fill")
                     timeView(time: locationManager.sunset, label: "שקיעה", symbol: "sunset.fill")
+                    timeView(time: locationManager.sunrise, label: "זריחה", symbol: "sunrise.fill")
                 }
             }
         }

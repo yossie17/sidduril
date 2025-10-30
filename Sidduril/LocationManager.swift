@@ -82,10 +82,26 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("API Status: \(apiResponse.status)")
             
             if apiResponse.status == "OK" {
-                sunrise = apiResponse.results.sunrise
-                sunset = apiResponse.results.sunset
-                print("Sunrise: \(apiResponse.results.sunrise)")
-                print("Sunset: \(apiResponse.results.sunset)")
+                let calendar = Calendar.current
+                let now = Date()
+                
+                // Extract time components from API response and apply to today's date
+                // Note: API appears to return them swapped, so we swap them back
+                let sunriseComponents = calendar.dateComponents([.hour, .minute], from: apiResponse.results.sunset)
+                let sunsetComponents = calendar.dateComponents([.hour, .minute], from: apiResponse.results.sunrise)
+                
+                // Create dates with today's date but API's time
+                var todayComponents = calendar.dateComponents([.year, .month, .day], from: now)
+                todayComponents.hour = sunriseComponents.hour
+                todayComponents.minute = sunriseComponents.minute
+                sunrise = calendar.date(from: todayComponents)
+                
+                todayComponents.hour = sunsetComponents.hour
+                todayComponents.minute = sunsetComponents.minute
+                sunset = calendar.date(from: todayComponents)
+                
+                print("Sunrise: \(sunrise?.description ?? "nil")")
+                print("Sunset: \(sunset?.description ?? "nil")")
             }
         } catch {
             print("Error fetching sunrise/sunset: \(error)")
