@@ -23,7 +23,7 @@ class PrayerLoader {
         }
         
         // Define the specific order
-        let order = ["shacharit", "mincha", "arvit", "birkathamazon"]
+        let order = ["shacharit", "mincha", "arvit", "birkathamazon", "thtehillim"]
         
         // Return prayers in the specified order
         return order.compactMap { prayerDict[$0] }
@@ -42,6 +42,7 @@ class PrayerLoader {
         case "mincha": return "מנחה"
         case "arvit": return "ערבית"
         case "birkathamazon": return "ברכת המזון"
+        case "thtehillim": return "תהילים"
         default: return filename
         }
     }
