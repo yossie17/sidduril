@@ -34,6 +34,7 @@ class PrayerLoader {
         case "shacharit": return "שחרית"
         case "mincha": return "מנחה"
         case "arvit": return "ערבית"
+        case "birkathamazon": return "ברכת המזון"
         default: return filename
         }
     }
